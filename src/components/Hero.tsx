@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Mail, Phone, ExternalLink, ChevronDown } from 'lucide-react';
+import { Github, Mail, Phone, ExternalLink, ChevronDown, Code, Cpu, Terminal, Zap } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
           animate="visible"
           className="grid lg:grid-cols-2 gap-12 items-center"
         >
-          {/* Profile Image */}
+          {/* CS-Themed Logo */}
           <motion.div 
             variants={itemVariants}
             className="flex justify-center lg:justify-end order-2 lg:order-1"
@@ -84,13 +84,57 @@ const Hero: React.FC = () => {
               whileHover={{ scale: 1.05, y: -5 }}
               className="relative group"
             >
-              <div className="w-80 h-80 rounded-3xl overflow-hidden shadow-2xl ring-4 ring-blue-600/20 dark:ring-blue-400/20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 p-2">
-                <img
-                  src="/public/resume image2.jpg"
-                  alt="Shashank Shetty"
-                  className="w-full h-full object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className="w-80 h-80 rounded-3xl overflow-hidden shadow-2xl ring-4 ring-blue-600/20 dark:ring-blue-400/20 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 p-8 flex items-center justify-center">
+                {/* Circuit Pattern Background */}
+                <div className="absolute inset-0 opacity-20">
+                  <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <pattern id="circuit" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 10,0 L 10,10 M 0,10 L 20,10" stroke="white" strokeWidth="0.5" fill="none"/>
+                        <circle cx="10" cy="10" r="1" fill="white"/>
+                      </pattern>
+                    </defs>
+                    <rect width="100" height="100" fill="url(#circuit)"/>
+                  </svg>
+                </div>
+                
+                {/* Main Logo */}
+                <div className="relative z-10 text-white">
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="relative"
+                  >
+                    <Cpu className="h-32 w-32 mb-4 mx-auto" />
+                  </motion.div>
+                  
+                  {/* Floating Icons */}
+                  <motion.div
+                    animate={{ y: [-10, 10, -10] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute -top-8 -left-8"
+                  >
+                    <Code className="h-8 w-8 text-blue-200" />
+                  </motion.div>
+                  
+                  <motion.div
+                    animate={{ y: [10, -10, 10] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute -top-8 -right-8"
+                  >
+                    <Terminal className="h-8 w-8 text-purple-200" />
+                  </motion.div>
+                  
+                  <motion.div
+                    animate={{ y: [-5, 15, -5] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                    className="absolute -bottom-8 left-1/2 transform -translate-x-1/2"
+                  >
+                    <Zap className="h-8 w-8 text-yellow-200" />
+                  </motion.div>
+                </div>
               </div>
+              
               {/* Decorative elements */}
               <div className="absolute -top-4 -right-4 w-8 h-8 bg-blue-600 rounded-full opacity-80"></div>
               <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-600 rounded-full opacity-80"></div>

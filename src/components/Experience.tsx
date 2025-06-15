@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, ExternalLink, Briefcase } from 'lucide-react';
+import { Calendar, MapPin, ExternalLink, Briefcase, Code, Database, Globe } from 'lucide-react';
 
 interface ExperienceItem {
   id: number;
@@ -8,47 +8,53 @@ interface ExperienceItem {
   company: string;
   location: string;
   period: string;
-  description: string[];
+  description: string;
+  achievements: string[];
   technologies: string[];
   companyUrl?: string;
   type: 'internship' | 'project';
+  icon: React.ElementType;
 }
 
 const Experience: React.FC = () => {
   const experiences: ExperienceItem[] = [
     {
       id: 1,
-      title: 'Software Development Intern',
+      title: 'Java Full Stack Intern',
       company: 'Besant Technologies',
       location: 'Bangalore, India',
-      period: 'Jun 2023 - Aug 2023',
-      description: [
+      period: 'Jan 2025 - May 2025',
+      description: 'Comprehensive full-stack development internship focusing on Java technologies, database management, and modern web development practices.',
+      achievements: [
         'Developed web applications using Java Spring Boot framework',
         'Worked on database design and optimization using MySQL',
         'Collaborated with senior developers on client projects',
         'Gained hands-on experience in full-stack development',
         'Participated in code reviews and agile development practices'
       ],
-      technologies: ['Java', 'Spring Boot', 'MySQL', 'HTML/CSS', 'JavaScript', 'Git'],
+      technologies: ['Java', 'Spring Boot', 'MySQL', 'HTML', 'CSS', 'JavaScript', 'Git'],
       companyUrl: 'https://besanttechnologies.com',
-      type: 'internship'
+      type: 'internship',
+      icon: Code
     },
     {
       id: 2,
-      title: 'Project Development Intern',
+      title: 'Full Stack Intern',
       company: 'Varcons Technologies',
-      location: 'Mangalore, India',
-      period: 'Dec 2022 - Feb 2023',
-      description: [
+      location: 'Mangalore, India (Online)',
+      period: 'Oct 2023 - Dec 2023',
+      description: 'Remote internship focused on full-stack web development, gaining real-world experience in software development and design principles.',
+      achievements: [
         'Contributed to the development of enterprise software solutions',
-        'Implemented responsive web interfaces using modern CSS frameworks',
+        'Implemented responsive web interfaces using modern frameworks',
         'Assisted in API development and integration',
         'Learned project management methodologies and client communication',
         'Worked on bug fixes and feature enhancements'
       ],
-      technologies: ['Java', 'React', 'Node.js', 'MongoDB', 'Bootstrap', 'REST APIs'],
+      technologies: ['React', 'Node.js', 'MongoDB', 'Bootstrap', 'REST APIs', 'Git'],
       companyUrl: 'https://varcons.com',
-      type: 'internship'
+      type: 'internship',
+      icon: Globe
     }
   ];
 
@@ -63,9 +69,9 @@ const Experience: React.FC = () => {
   };
 
   const itemVariants = {
-    hidden: { x: -50, opacity: 0 },
+    hidden: { y: 50, opacity: 0 },
     visible: {
-      x: 0,
+      y: 0,
       opacity: 1,
       transition: {
         duration: 0.5
@@ -88,124 +94,113 @@ const Experience: React.FC = () => {
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             My internship experiences and professional journey in software development, 
-            gaining practical skills and industry exposure.
+            gaining practical skills and industry exposure through hands-on projects.
           </p>
         </motion.div>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-blue-200 dark:bg-blue-800"></div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 gap-8"
+        >
+          {experiences.map((experience) => (
+            <motion.div
+              key={experience.id}
+              variants={itemVariants}
+              whileHover={{ scale: 1.02, y: -10 }}
+              className="bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden"
+            >
+              {/* Header with Icon and Type */}
+              <div className="relative p-6 bg-gradient-to-r from-blue-600 to-purple-600">
+                <div className="flex items-center justify-between">
+                  <div className="p-3 bg-white/20 rounded-lg">
+                    <experience.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <span className="px-3 py-1 bg-white/20 text-white text-sm rounded-full uppercase font-semibold">
+                    {experience.type}
+                  </span>
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute top-4 right-16 w-2 h-2 bg-white/30 rounded-full"></div>
+                <div className="absolute bottom-4 left-16 w-3 h-3 bg-white/20 rounded-full"></div>
+              </div>
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-12"
-          >
-            {experiences.map((experience, index) => (
-              <motion.div
-                key={experience.id}
-                variants={itemVariants}
-                className={`relative flex items-center ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                } flex-col md:space-x-8`}
-              >
-                {/* Timeline dot */}
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                  viewport={{ once: true }}
-                  className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-blue-600 border-4 border-white dark:border-gray-900 rounded-full z-10"
-                ></motion.div>
-
-                {/* Content */}
-                <div className={`w-full md:w-5/12 ml-12 md:ml-0 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
-                  <motion.div
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    transition={{ duration: 0.2 }}
-                    className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex items-center mb-4">
-                      <Briefcase className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
-                      <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm uppercase">
-                        {experience.type}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                      {experience.title}
-                    </h3>
-                    
-                    <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 mb-3">
-                      <span className="font-semibold text-lg">{experience.company}</span>
-                      {experience.companyUrl && (
-                        <a
-                          href={experience.companyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      )}
-                    </div>
-
-                    <div className={`flex flex-wrap gap-4 mb-4 text-sm text-gray-600 dark:text-gray-400 ${
-                      index % 2 === 0 ? 'md:justify-end' : ''
-                    }`}>
-                      <div className="flex items-center space-x-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{experience.period}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <MapPin className="h-4 w-4" />
-                        <span>{experience.location}</span>
-                      </div>
-                    </div>
-
-                    <ul className={`space-y-2 mb-6 text-gray-600 dark:text-gray-400 ${
-                      index % 2 === 0 ? 'md:text-right' : ''
-                    }`}>
-                      {experience.description.map((item, itemIndex) => (
-                        <motion.li 
-                          key={itemIndex} 
-                          initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: itemIndex * 0.1 }}
-                          viewport={{ once: true }}
-                          className="flex items-start space-x-2"
-                        >
-                          <span className="text-blue-600 dark:text-blue-400 mt-1.5 w-1.5 h-1.5 bg-current rounded-full flex-shrink-0"></span>
-                          <span>{item}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-
-                    <div className={`flex flex-wrap gap-2 ${index % 2 === 0 ? 'md:justify-end' : ''}`}>
-                      {experience.technologies.map((tech, techIndex) => (
-                        <motion.span
-                          key={techIndex}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.3, delay: techIndex * 0.1 }}
-                          viewport={{ once: true }}
-                          className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full"
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </motion.div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                  {experience.title}
+                </h3>
+                
+                <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 mb-3">
+                  <span className="font-semibold text-lg">{experience.company}</span>
+                  {experience.companyUrl && (
+                    <a
+                      href={experience.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  )}
                 </div>
 
-                {/* Spacer for alternating layout */}
-                <div className="hidden md:block w-5/12"></div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+                <div className="flex flex-wrap gap-4 mb-4 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center space-x-1">
+                    <Calendar className="h-4 w-4" />
+                    <span>{experience.period}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <MapPin className="h-4 w-4" />
+                    <span>{experience.location}</span>
+                  </div>
+                </div>
+
+                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                  {experience.description}
+                </p>
+
+                <div className="mb-6">
+                  <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                    Key Achievements
+                  </h4>
+                  <ul className="space-y-2">
+                    {experience.achievements.map((achievement, achievementIndex) => (
+                      <motion.li 
+                        key={achievementIndex} 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: achievementIndex * 0.1 }}
+                        viewport={{ once: true }}
+                        className="flex items-start space-x-3"
+                      >
+                        <div className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <span className="text-gray-600 dark:text-gray-400 text-sm">{achievement}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {experience.technologies.map((tech, techIndex) => (
+                    <motion.span
+                      key={techIndex}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: techIndex * 0.1 }}
+                      viewport={{ once: true }}
+                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full"
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* Call to Action */}
         <motion.div
