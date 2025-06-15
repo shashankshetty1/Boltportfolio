@@ -1,5 +1,6 @@
 import React from 'react';
-import { Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Calendar, MapPin, ExternalLink, Briefcase } from 'lucide-react';
 
 interface ExperienceItem {
   id: number;
@@ -10,122 +11,145 @@ interface ExperienceItem {
   description: string[];
   technologies: string[];
   companyUrl?: string;
+  type: 'internship' | 'project';
 }
 
 const Experience: React.FC = () => {
   const experiences: ExperienceItem[] = [
     {
       id: 1,
-      title: 'Senior Frontend Developer',
-      company: 'TechCorp Solutions',
-      location: 'San Francisco, CA',
-      period: '2022 - Present',
+      title: 'Software Development Intern',
+      company: 'Besant Technologies',
+      location: 'Bangalore, India',
+      period: 'Jun 2023 - Aug 2023',
       description: [
-        'Led development of user-facing features for a SaaS platform serving 50,000+ users',
-        'Implemented responsive designs and improved page load times by 40%',
-        'Mentored junior developers and established coding standards for the team',
-        'Collaborated with UX designers to create intuitive user interfaces'
+        'Developed web applications using Java Spring Boot framework',
+        'Worked on database design and optimization using MySQL',
+        'Collaborated with senior developers on client projects',
+        'Gained hands-on experience in full-stack development',
+        'Participated in code reviews and agile development practices'
       ],
-      technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'GraphQL'],
-      companyUrl: 'https://example.com'
+      technologies: ['Java', 'Spring Boot', 'MySQL', 'HTML/CSS', 'JavaScript', 'Git'],
+      companyUrl: 'https://besanttechnologies.com',
+      type: 'internship'
     },
     {
       id: 2,
-      title: 'Full Stack Developer',
-      company: 'Digital Innovations Inc.',
-      location: 'Remote',
-      period: '2020 - 2022',
+      title: 'Project Development Intern',
+      company: 'Varcons Technologies',
+      location: 'Mangalore, India',
+      period: 'Dec 2022 - Feb 2023',
       description: [
-        'Developed and maintained multiple client projects using modern web technologies',
-        'Built RESTful APIs and integrated third-party services',
-        'Optimized database queries resulting in 50% faster response times',
-        'Participated in code reviews and contributed to technical documentation'
+        'Contributed to the development of enterprise software solutions',
+        'Implemented responsive web interfaces using modern CSS frameworks',
+        'Assisted in API development and integration',
+        'Learned project management methodologies and client communication',
+        'Worked on bug fixes and feature enhancements'
       ],
-      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'AWS'],
-      companyUrl: 'https://example.com'
-    },
-    {
-      id: 3,
-      title: 'Frontend Developer',
-      company: 'StartupXYZ',
-      location: 'Austin, TX',
-      period: '2019 - 2020',
-      description: [
-        'Converted design mockups into pixel-perfect, responsive web applications',
-        'Implemented state management solutions and optimized component architecture',
-        'Worked closely with backend team to integrate APIs and ensure smooth data flow',
-        'Contributed to the company\'s design system and component library'
-      ],
-      technologies: ['React', 'Redux', 'Sass', 'Jest', 'Webpack'],
-      companyUrl: 'https://example.com'
-    },
-    {
-      id: 4,
-      title: 'Junior Web Developer',
-      company: 'WebDesign Pro',
-      location: 'Dallas, TX',
-      period: '2018 - 2019',
-      description: [
-        'Built responsive websites for small businesses and local organizations',
-        'Learned modern web development practices and version control with Git',
-        'Collaborated with designers to implement custom WordPress themes',
-        'Provided technical support and training to clients'
-      ],
-      technologies: ['HTML', 'CSS', 'JavaScript', 'WordPress', 'PHP'],
-      companyUrl: 'https://example.com'
+      technologies: ['Java', 'React', 'Node.js', 'MongoDB', 'Bootstrap', 'REST APIs'],
+      companyUrl: 'https://varcons.com',
+      type: 'internship'
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { x: -50, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
   return (
-    <section id="experience" className="py-20 bg-gray-50 dark:bg-slate-800">
+    <section id="experience" className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Work Experience
+            Professional Experience
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            My professional journey in web development, building solutions that impact 
-            thousands of users and working with amazing teams along the way.
+            My internship experiences and professional journey in software development, 
+            gaining practical skills and industry exposure.
           </p>
-        </div>
+        </motion.div>
 
         <div className="relative">
           {/* Timeline line */}
           <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-blue-200 dark:bg-blue-800"></div>
 
-          <div className="space-y-12">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="space-y-12"
+          >
             {experiences.map((experience, index) => (
-              <div
+              <motion.div
                 key={experience.id}
+                variants={itemVariants}
                 className={`relative flex items-center ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 } flex-col md:space-x-8`}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-blue-600 border-4 border-white dark:border-slate-800 rounded-full z-10"></div>
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-blue-600 border-4 border-white dark:border-gray-900 rounded-full z-10"
+                ></motion.div>
 
                 {/* Content */}
                 <div className={`w-full md:w-5/12 ml-12 md:ml-0 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
-                  <div className="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`${index % 2 === 0 ? 'md:text-right md:order-2' : ''} flex-1`}>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                          {experience.title}
-                        </h3>
-                        <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 mb-1">
-                          <span className="font-semibold">{experience.company}</span>
-                          {experience.companyUrl && (
-                            <a
-                              href={experience.companyUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
-                            >
-                              <ExternalLink className="h-4 w-4" />
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                    className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex items-center mb-4">
+                      <Briefcase className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
+                      <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm uppercase">
+                        {experience.type}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                      {experience.title}
+                    </h3>
+                    
+                    <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 mb-3">
+                      <span className="font-semibold text-lg">{experience.company}</span>
+                      {experience.companyUrl && (
+                        <a
+                          href={experience.companyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      )}
                     </div>
 
                     <div className={`flex flex-wrap gap-4 mb-4 text-sm text-gray-600 dark:text-gray-400 ${
@@ -145,32 +169,73 @@ const Experience: React.FC = () => {
                       index % 2 === 0 ? 'md:text-right' : ''
                     }`}>
                       {experience.description.map((item, itemIndex) => (
-                        <li key={itemIndex} className="flex items-start space-x-2">
+                        <motion.li 
+                          key={itemIndex} 
+                          initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: itemIndex * 0.1 }}
+                          viewport={{ once: true }}
+                          className="flex items-start space-x-2"
+                        >
                           <span className="text-blue-600 dark:text-blue-400 mt-1.5 w-1.5 h-1.5 bg-current rounded-full flex-shrink-0"></span>
                           <span>{item}</span>
-                        </li>
+                        </motion.li>
                       ))}
                     </ul>
 
                     <div className={`flex flex-wrap gap-2 ${index % 2 === 0 ? 'md:justify-end' : ''}`}>
                       {experience.technologies.map((tech, techIndex) => (
-                        <span
+                        <motion.span
                           key={techIndex}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: techIndex * 0.1 }}
+                          viewport={{ once: true }}
                           className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full"
                         >
                           {tech}
-                        </span>
+                        </motion.span>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Spacer for alternating layout */}
                 <div className="hidden md:block w-5/12"></div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-8 rounded-xl">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Looking for New Opportunities
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+              I'm actively seeking internship and full-time opportunities to further develop my skills 
+              and contribute to innovative projects in software development.
+            </p>
+            <motion.button
+              onClick={() => {
+                const element = document.getElementById('contact');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200"
+            >
+              Get In Touch
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
