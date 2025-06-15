@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Award, ExternalLink, Calendar, CheckCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Award, ExternalLink, Calendar, CheckCircle, X, Star } from 'lucide-react';
 
 interface Certification {
   id: number;
@@ -12,79 +12,92 @@ interface Certification {
   skills: string[];
   verifyUrl?: string;
   category: string;
+  logo?: string;
+  featured?: boolean;
 }
 
 const Certifications: React.FC = () => {
+  const [selectedCertification, setSelectedCertification] = useState<Certification | null>(null);
+
   const certifications: Certification[] = [
     {
       id: 1,
-      title: 'AWS Cloud Practitioner',
-      issuer: 'Amazon Web Services',
+      title: 'AWS Cloud Foundations',
+      issuer: 'AWS Academy',
       date: 'September 2023',
-      credentialId: 'AWS-CCP-2023-SS001',
-      description: 'Foundational understanding of AWS Cloud services, security, architecture, pricing, and support.',
+      credentialId: 'AWS-CF-2023-SS001',
+      description: 'Comprehensive understanding of AWS Cloud services, architecture, security, and best practices for cloud computing.',
       skills: ['Cloud Computing', 'AWS Services', 'Cloud Security', 'Cost Management'],
       verifyUrl: 'https://aws.amazon.com/verification',
-      category: 'Cloud'
+      category: 'Cloud',
+      logo: '☁️',
+      featured: true
     },
     {
       id: 2,
-      title: 'Project Management Professional (PMP)',
-      issuer: 'Project Management Institute',
+      title: 'Project Management',
+      issuer: 'Great Learning',
       date: 'July 2023',
-      credentialId: 'PMP-2023-SS002',
-      description: 'Comprehensive project management methodology covering initiation, planning, execution, monitoring, and closure.',
+      credentialId: 'GL-PM-2023-SS002',
+      description: 'Project management methodology covering initiation, planning, execution, monitoring, and closure phases.',
       skills: ['Project Management', 'Agile', 'Risk Management', 'Team Leadership'],
-      verifyUrl: 'https://pmi.org/verification',
-      category: 'Management'
+      verifyUrl: 'https://greatlearning.com/verification',
+      category: 'Management',
+      logo: '📊',
+      featured: true
     },
     {
       id: 3,
-      title: 'Java Programming Certification',
-      issuer: 'HackerRank',
+      title: 'Java Full Stack',
+      issuer: 'Besant Technologies',
       date: 'May 2023',
-      credentialId: 'HR-JAVA-2023-SS003',
-      description: 'Advanced Java programming skills including OOP concepts, data structures, and algorithm implementation.',
-      skills: ['Java', 'Object-Oriented Programming', 'Data Structures', 'Algorithms'],
-      verifyUrl: 'https://hackerrank.com/verification',
-      category: 'Programming'
+      credentialId: 'BT-JFS-2023-SS003',
+      description: 'Complete Java full-stack development including Spring Boot, REST APIs, and database integration.',
+      skills: ['Java', 'Spring Boot', 'REST APIs', 'Database Design'],
+      verifyUrl: 'https://besanttechnologies.com/verification',
+      category: 'Programming',
+      logo: '☕',
+      featured: true
     },
     {
       id: 4,
-      title: 'SQL Database Certification',
-      issuer: 'HackerRank',
+      title: 'Data Visualization with Python',
+      issuer: 'Infosys Springboard',
       date: 'April 2023',
-      credentialId: 'HR-SQL-2023-SS004',
-      description: 'Proficiency in SQL queries, database design, optimization, and advanced database operations.',
-      skills: ['SQL', 'Database Design', 'Query Optimization', 'Data Analysis'],
-      verifyUrl: 'https://hackerrank.com/verification',
-      category: 'Database'
+      credentialId: 'IS-DVP-2023-SS004',
+      description: 'Advanced data visualization techniques using Python libraries like Matplotlib, Seaborn, and Plotly.',
+      skills: ['Python', 'Data Visualization', 'Matplotlib', 'Data Analysis'],
+      verifyUrl: 'https://infosysspringboard.com/verification',
+      category: 'Data Science',
+      logo: '📈'
     },
     {
       id: 5,
-      title: 'Web Development Bootcamp',
-      issuer: 'Udemy',
+      title: 'HTML & CSS Bootcamp',
+      issuer: 'LetsUpgrade',
       date: 'March 2023',
-      credentialId: 'UDEMY-WEB-2023-SS005',
-      description: 'Full-stack web development covering HTML, CSS, JavaScript, React, Node.js, and database integration.',
-      skills: ['HTML/CSS', 'JavaScript', 'React', 'Node.js', 'MongoDB'],
-      verifyUrl: 'https://udemy.com/verification',
-      category: 'Web Development'
+      credentialId: 'LU-HCB-2023-SS005',
+      description: 'Comprehensive web development bootcamp covering modern HTML5, CSS3, and responsive design principles.',
+      skills: ['HTML5', 'CSS3', 'Responsive Design', 'Web Development'],
+      verifyUrl: 'https://letsupgrade.com/verification',
+      category: 'Web Development',
+      logo: '🌐'
     },
     {
       id: 6,
-      title: 'Machine Learning Fundamentals',
-      issuer: 'Coursera',
+      title: 'Java (Basic)',
+      issuer: 'HackerRank',
       date: 'February 2023',
-      credentialId: 'COURSERA-ML-2023-SS006',
-      description: 'Introduction to machine learning algorithms, data preprocessing, model evaluation, and practical applications.',
-      skills: ['Machine Learning', 'Python', 'Data Analysis', 'Model Evaluation'],
-      verifyUrl: 'https://coursera.org/verification',
-      category: 'AI/ML'
+      credentialId: 'HR-JAVA-2023-SS006',
+      description: 'Fundamental Java programming concepts including OOP principles, data structures, and algorithm implementation.',
+      skills: ['Java', 'Object-Oriented Programming', 'Data Structures', 'Algorithms'],
+      verifyUrl: 'https://hackerrank.com/verification',
+      category: 'Programming',
+      logo: '💻'
     }
   ];
 
-  const categories = ['All', 'Cloud', 'Programming', 'Management', 'Database', 'Web Development', 'AI/ML'];
+  const categories = ['All', 'Cloud', 'Programming', 'Management', 'Data Science', 'Web Development'];
   const [activeCategory, setActiveCategory] = React.useState('All');
 
   const filteredCertifications = activeCategory === 'All' 
@@ -169,15 +182,25 @@ const Certifications: React.FC = () => {
               key={certification.id}
               variants={itemVariants}
               whileHover={{ scale: 1.02, y: -5 }}
-              className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+              onClick={() => setSelectedCertification(certification)}
+              className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer relative overflow-hidden"
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-lg group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
-                  <Award className="h-6 w-6 text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors duration-300" />
+              {/* Featured Badge */}
+              {certification.featured && (
+                <div className="absolute top-4 right-4">
+                  <Star className="h-5 w-5 text-yellow-500 fill-current" />
                 </div>
-                <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full">
-                  {certification.category}
-                </span>
+              )}
+
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="text-3xl">{certification.logo}</div>
+                  <div>
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full">
+                      {certification.category}
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
@@ -191,50 +214,155 @@ const Certifications: React.FC = () => {
               <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 text-sm mb-4">
                 <Calendar className="h-4 w-4" />
                 <span>{certification.date}</span>
-                {certification.credentialId && (
-                  <>
-                    <span>•</span>
-                    <span className="font-mono text-xs">{certification.credentialId}</span>
-                  </>
-                )}
               </div>
 
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed line-clamp-3">
                 {certification.description}
               </p>
 
               <div className="flex flex-wrap gap-2 mb-4">
-                {certification.skills.map((skill, index) => (
-                  <motion.span
+                {certification.skills.slice(0, 3).map((skill, index) => (
+                  <span
                     key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    viewport={{ once: true }}
                     className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-full"
                   >
                     {skill}
-                  </motion.span>
+                  </span>
                 ))}
+                {certification.skills.length > 3 && (
+                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-full">
+                    +{certification.skills.length - 3} more
+                  </span>
+                )}
               </div>
 
-              {certification.verifyUrl && (
-                <motion.a
-                  href={certification.verifyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="flex items-center justify-between">
+                <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200 text-sm font-medium"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200 text-sm font-medium"
                 >
-                  <CheckCircle className="h-4 w-4" />
-                  <span>Verify Credential</span>
-                  <ExternalLink className="h-3 w-3" />
-                </motion.a>
-              )}
+                  View Details →
+                </motion.button>
+                {certification.verifyUrl && (
+                  <motion.a
+                    href={certification.verifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="flex items-center space-x-1 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-colors duration-200 text-sm"
+                  >
+                    <CheckCircle className="h-4 w-4" />
+                    <span>Verify</span>
+                  </motion.a>
+                )}
+              </div>
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Certification Modal */}
+        <AnimatePresence>
+          {selectedCertification && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+              onClick={() => setSelectedCertification(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-8">
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="text-4xl">{selectedCertification.logo}</div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                          {selectedCertification.title}
+                        </h3>
+                        <p className="text-blue-600 dark:text-blue-400 font-semibold">
+                          {selectedCertification.issuer}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setSelectedCertification(null)}
+                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                    >
+                      <X className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center space-x-4 mb-6">
+                    <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full">
+                      {selectedCertification.category}
+                    </span>
+                    <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
+                      <Calendar className="h-4 w-4" />
+                      <span>{selectedCertification.date}</span>
+                    </div>
+                    {selectedCertification.featured && (
+                      <div className="flex items-center space-x-1 text-yellow-600 dark:text-yellow-400">
+                        <Star className="h-4 w-4 fill-current" />
+                        <span className="text-sm font-medium">Featured</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {selectedCertification.credentialId && (
+                    <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Credential ID</p>
+                      <p className="font-mono text-gray-900 dark:text-white">{selectedCertification.credentialId}</p>
+                    </div>
+                  )}
+
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                    {selectedCertification.description}
+                  </p>
+
+                  <div className="mb-6">
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
+                      Skills Covered
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedCertification.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {selectedCertification.verifyUrl && (
+                    <motion.a
+                      href={selectedCertification.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+                    >
+                      <CheckCircle className="h-5 w-5" />
+                      <span>Verify Credential</span>
+                      <ExternalLink className="h-4 w-4" />
+                    </motion.a>
+                  )}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Certification Stats */}
         <motion.div

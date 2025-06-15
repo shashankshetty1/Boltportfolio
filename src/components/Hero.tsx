@@ -65,117 +65,137 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          className="grid lg:grid-cols-2 gap-12 items-center"
         >
-          <motion.div variants={itemVariants} className="mb-8">
+          {/* Profile Image */}
+          <motion.div 
+            variants={itemVariants}
+            className="flex justify-center lg:justify-end order-2 lg:order-1"
+          >
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
-              className="w-40 h-40 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-600/20 dark:ring-blue-400/20"
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="relative group"
             >
-              <img
-                src="/public/resume image2.jpg"
-                alt="Shashank Shetty"
-                className="w-full h-full object-cover object-center hover:scale-110 transition-transform duration-500"
-              />
+              <div className="w-80 h-80 rounded-3xl overflow-hidden shadow-2xl ring-4 ring-blue-600/20 dark:ring-blue-400/20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 p-2">
+                <img
+                  src="/public/resume image2.jpg"
+                  alt="Shashank Shetty"
+                  className="w-full h-full object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-8 h-8 bg-blue-600 rounded-full opacity-80"></div>
+              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-600 rounded-full opacity-80"></div>
+              <div className="absolute top-1/2 -left-6 w-4 h-4 bg-blue-400 rounded-full opacity-60"></div>
             </motion.div>
           </motion.div>
 
-          <motion.h1 
-            variants={itemVariants}
-            className="text-5xl md:text-7xl font-bold mb-6"
-          >
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Shashank Shetty
-            </span>
-          </motion.h1>
-          
+          {/* Content */}
           <motion.div 
             variants={itemVariants}
-            className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8"
+            className="text-center lg:text-left order-1 lg:order-2"
           >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 0.5 }}
+            <motion.h1 
+              variants={itemVariants}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6"
             >
-              Software Developer & Computer Science Student
-            </motion.span>
-          </motion.div>
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Shashank Shetty
+              </span>
+            </motion.h1>
+            
+            <motion.div 
+              variants={itemVariants}
+              className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8"
+            >
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 0.5 }}
+              >
+                Software Developer & Computer Science Student
+              </motion.span>
+            </motion.div>
 
-          <motion.p 
-            variants={itemVariants}
-            className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed"
-          >
-            Passionate about Java development, web technologies, and creating innovative solutions. 
-            Currently pursuing Computer Science with hands-on experience in software development and project management.
-          </motion.p>
+            <motion.p 
+              variants={itemVariants}
+              className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-12 leading-relaxed"
+            >
+              Passionate about Java development, web technologies, and creating innovative solutions. 
+              Currently pursuing Computer Science with hands-on experience in software development and project management.
+            </motion.p>
 
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
-          >
-            <motion.button
-              onClick={() => scrollToSection('projects')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 mb-12"
             >
-              View My Projects
-            </motion.button>
-            <motion.button
-              onClick={() => scrollToSection('contact')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200"
-            >
-              Get In Touch
-            </motion.button>
-          </motion.div>
+              <motion.button
+                onClick={() => scrollToSection('projects')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                View My Projects
+              </motion.button>
+              <motion.button
+                onClick={() => scrollToSection('contact')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200"
+              >
+                Get In Touch
+              </motion.button>
+            </motion.div>
 
-          <motion.div 
-            variants={itemVariants}
-            className="flex items-center justify-center space-x-6"
-          >
-            <motion.a
-              href="mailto:shashankshetty@example.com"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+            <motion.div 
+              variants={itemVariants}
+              className="flex items-center justify-center lg:justify-start space-x-6"
             >
-              <Mail className="h-6 w-6" />
-            </motion.a>
-            <motion.a
-              href="https://github.com/shashankshetty"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
-            >
-              <Github className="h-6 w-6" />
-            </motion.a>
-            <motion.a
-              href="tel:+919876543210"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
-            >
-              <Phone className="h-6 w-6" />
-            </motion.a>
-            <motion.a
-              href="#"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
-            >
-              <ExternalLink className="h-6 w-6" />
-            </motion.a>
+              <motion.a
+                href="mailto:shettyshashank089@gmail.com"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+              >
+                <Mail className="h-6 w-6" />
+              </motion.a>
+              <motion.a
+                href="https://github.com/shashankshetty"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+              >
+                <Github className="h-6 w-6" />
+              </motion.a>
+              <motion.a
+                href="tel:+916361128305"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+              >
+                <Phone className="h-6 w-6" />
+              </motion.a>
+              <motion.a
+                href="https://shashank.git"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+              >
+                <ExternalLink className="h-6 w-6" />
+              </motion.a>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>

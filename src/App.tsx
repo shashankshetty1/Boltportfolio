@@ -7,7 +7,6 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Achievements from './components/Achievements';
-import Responsibilities from './components/Responsibilities';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -18,7 +17,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'education', 'skills', 'projects', 'experience', 'achievements', 'responsibilities', 'certifications', 'contact'];
+      const sections = ['home', 'education', 'skills', 'projects', 'experience', 'achievements', 'certifications', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -50,7 +49,6 @@ function App() {
           <Projects />
           <Experience />
           <Achievements />
-          <Responsibilities />
           <Certifications />
           <Contact />
         </main>
