@@ -10,10 +10,13 @@ import Achievements from './components/Achievements';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
+import ChatbotToggle from './components/ChatbotToggle';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +41,10 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const toggleChatbot = () => {
+    setIsChatbotOpen(!isChatbotOpen);
+  };
+
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
@@ -53,6 +60,10 @@ function App() {
           <Contact />
         </main>
         <Footer />
+        
+        {/* Chatbot Components */}
+        <ChatbotToggle onClick={toggleChatbot} isOpen={isChatbotOpen} />
+        <Chatbot isOpen={isChatbotOpen} onToggle={toggleChatbot} />
       </div>
     </ThemeProvider>
   );
