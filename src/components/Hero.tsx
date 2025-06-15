@@ -73,16 +73,16 @@ const Hero: React.FC = () => {
         >
           <motion.div variants={itemVariants} className="mb-8">
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 p-1"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
+              className="w-40 h-40 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-600/20 dark:ring-blue-400/20"
             >
-              <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 flex items-center justify-center">
-                <span className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  SS
-                </span>
-              </div>
+              <img
+                src="/public/resume image2.jpg"
+                alt="Shashank Shetty"
+                className="w-full h-full object-cover object-center hover:scale-110 transition-transform duration-500"
+              />
             </motion.div>
           </motion.div>
 
